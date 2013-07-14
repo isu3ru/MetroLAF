@@ -4,13 +4,15 @@
  */
 package net.rubikscomplex.metrolaf;
 
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.util.List;
 import java.awt.Window;
@@ -24,7 +26,6 @@ import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -34,6 +35,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRootPane;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import sun.awt.SunToolkit;
@@ -87,6 +89,7 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         restoreAction = new RestoreAction();
         
         titleLabel = new JLabel("Test Title");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         // Must use unicode mappings for Marlett font
         // See http://www.pclviewer.com/de/resources/pclt/pclt_marlett.html
@@ -122,7 +125,8 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         menuBar.setSize(ICON_WIDTH, ICON_HEIGHT);
         menuBar.setAlignmentY(Component.TOP_ALIGNMENT);
         
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        // setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new MetroTitlePaneLayout());
         add(menuBar);
         add(Box.createHorizontalGlue());
         add(titleLabel);
@@ -167,9 +171,13 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         }
         int width = getWidth();
         int height = getHeight();
+        String title = getTitle();
+        titleLabel.setText(title == null ? "" : title);
         
+        /*
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, width, height);
+        */
         
         MetroLookAndFeel.getLogger().info(minButton.getSize().toString());
         MetroLookAndFeel.getLogger().info(String.format("Width: %d, Height: %d", width, height));
@@ -248,6 +256,18 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
                 ds == JRootPane.WARNING_DIALOG) {
             add(closeButton);
         }
+    }
+    
+    public String getTitle() {
+        Window w = getWindow();
+        
+        if (w instanceof Frame) {
+            return ((Frame)w).getTitle();
+        }
+        else if (w instanceof Dialog) {
+            return ((Dialog)w).getTitle();
+        }
+        return null;
     }
     
     public void close() {
@@ -482,6 +502,61 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
             return new Dimension(Math.max(ICON_WIDTH+ICON_BORDER_WIDTH*2, size.width),
                                  Math.max(size.height, ICON_HEIGHT+ICON_BORDER_WIDTH*2));
         }
+    }
+    
+    public class MetroTitlePaneLayout implements LayoutManager {
+        public static final int TITLE_Y_OFFSET = 3;
+        
+        @Override
+        public Dimension preferredLayoutSize(Container c) {
+            return new Dimension(PANE_HEIGHT, PANE_HEIGHT);
+        }
+        
+        @Override
+        public Dimension minimumLayoutSize(Container c) {
+            return preferredLayoutSize(c);
+        }
+        
+        @Override
+        public void layoutContainer(Container c) {
+            int w = getWidth();
+            int lx = 0;
+            int lw = w;
+            int minOffset = 0;
+            if (menuBar != null) {
+                menuBar.setBounds(0, 0, CONTENT_HEIGHT, CONTENT_HEIGHT);
+                lx = CONTENT_HEIGHT;
+            }
+            if (closeButton != null) {
+                closeButton.setBounds(w-CB_BUTTON_WIDTH, 0, CB_BUTTON_WIDTH, CONTENT_HEIGHT);
+                lw -= CB_BUTTON_WIDTH;
+            }
+            if ((maximizeAction.isEnabled() || restoreAction.isEnabled()) && maxButton != null) {
+                maxButton.setBounds(w-(CB_BUTTON_WIDTH*2), 0, CB_BUTTON_WIDTH, CONTENT_HEIGHT);
+                maxButton.setVisible(true);
+                minOffset += CB_BUTTON_WIDTH;
+                lw -= CB_BUTTON_WIDTH;
+            }
+            else {
+                maxButton.setVisible(false);
+                maxButton.setBounds(0, 0, 0, 0);
+            }
+            if (minimizeAction.isEnabled() && minButton != null) {
+                minButton.setBounds(w-(CB_BUTTON_WIDTH*2)-minOffset, 0, CB_BUTTON_WIDTH, CONTENT_HEIGHT);
+                minButton.setVisible(true);
+                lw -= CB_BUTTON_WIDTH;
+            }
+            else {
+                minButton.setVisible(false);
+                minButton.setBounds(0, 0, 0, 0);
+            }
+            titleLabel.setBounds(lx, TITLE_Y_OFFSET, lw, CONTENT_HEIGHT-TITLE_Y_OFFSET);
+        }
+        
+        @Override
+        public void addLayoutComponent(String name, Component c) {}
+        @Override
+        public void removeLayoutComponent(Component c) {}
     }
 
     public class MetroTitlePaneWindowHandler extends WindowAdapter {

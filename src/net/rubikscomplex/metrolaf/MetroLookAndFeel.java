@@ -13,6 +13,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
+import net.rubikscomplex.metrolaf.MetroBorders.FrameBorder;
 
 /**
  *
@@ -54,25 +55,53 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
         super.initClassDefaults(table);
         
         Object[] uiDefaults = {
-            "RootPaneUI", "net.rubikscomplex.metrolaf.MetroRootPaneUI"
+            "RootPaneUI", "net.rubikscomplex.metrolaf.MetroRootPaneUI",
         };
         
         table.putDefaults(uiDefaults);
     }
     
+    @Override
+    protected void initComponentDefaults(UIDefaults table) {
+        super.initComponentDefaults(table);
+        Object[] uiDefaults = {
+            "RootPane.frameBorder", new FrameBorder(),
+            "Panel.background", Color.WHITE,
+            "Menu.background", Color.WHITE,
+            "MenuItem.background", Color.WHITE,
+            "MenuBar.background", Color.WHITE,
+            "PopupMenu.background", Color.WHITE,
+            "Label.background", Color.WHITE,
+            "Viewport.background", Color.WHITE,
+            "Desktop.background", Color.WHITE,
+            "OptionPane.background", Color.WHITE,
+            "control", Color.WHITE,
+            // "*.font", new Font("Segoe UI", Font.PLAIN, 12)
+        };
+        table.putDefaults(uiDefaults);
+    }
+    
     public static void setUIFont(Font f) {
         // System.err.println(UIManager.getDefaults().get("TabbedPane.font"));
+        /*
         UIManager.getDefaults().put("Panel.background", Color.WHITE);
         UIManager.getDefaults().put("Menu.background", Color.WHITE);
         UIManager.getDefaults().put("MenuItem.background", Color.WHITE);
         UIManager.getDefaults().put("MenuBar.background", Color.WHITE);
         UIManager.getDefaults().put("PopupMenu.background", Color.WHITE);
+        */
         Enumeration keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object k = keys.nextElement();
             Object v = UIManager.getDefaults().get(k);
             if (k.toString().endsWith(".background")) {
                 MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
+            }
+            if (v instanceof Color) {
+                if (((Color)v).getRed() == 238) {
+                    System.err.println("*** "+k.toString());
+                    // UIManager.getDefaults().put(k, Color.WHITE);
+                }
             }
             // System.err.println(k.toString()+": "+v);
             if (v != null && v instanceof FontUIResource) {

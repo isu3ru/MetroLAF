@@ -11,6 +11,7 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.LayoutManager2;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -58,6 +59,8 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
     protected Window window;
     protected MouseInputListener mouseInputListener;
     protected Cursor lastCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+    protected LayoutManager savedOldLayout;
+    protected LayoutManager layoutManager;
     
     public static ComponentUI createUI(JComponent c) {
         MetroLookAndFeel.getLogger().info("Creating new MetroRootPaneUI...");
@@ -75,28 +78,37 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         }
     }
     
+    @Override 
+    public void uninstallUI(JComponent c) {
+        super.uninstallUI(c);
+        uninstallClientDecorations(root);
+        mouseInputListener = null;
+        root = null;
+    }
+    
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         MetroLookAndFeel.getLogger().log(Level.INFO, "Property changed called: {0}", e.getPropertyName());
         super.propertyChange(e);
-
         String propertyName = e.getPropertyName();
         if (propertyName == null) {
             return;
         }
-
-        if(propertyName.equals("windowDecorationStyle")) {
-            JRootPane root = (JRootPane)e.getSource();
-            int style = root.getWindowDecorationStyle();
-
-            // This is potentially more than needs to be done,
-            // but it rarely happens and makes the install/uninstall process
-            // simpler. MetalTitlePane also assumes it will be recreated if
-            // the decoration style changes.
-            uninstallClientDecorations(root);
-            if (style != JRootPane.NONE) {
-                installClientDecorations(root);
-            }
+        switch (propertyName) {
+            case "windowDecorationStyle":
+                JRootPane rootPane = (JRootPane)e.getSource();
+                int style = rootPane.getWindowDecorationStyle();
+                uninstallClientDecorations(rootPane);
+                if (style != JRootPane.NONE) {
+                    installClientDecorations(rootPane);
+                }
+                break;
+            case "ancestor":
+                uninstallWindowListeners(root);
+                if (((JRootPane)e.getSource()).getWindowDecorationStyle() != JRootPane.NONE) {
+                    installWindowListeners(root, root.getParent());
+                }
+                break;
         }
     }
     
@@ -153,14 +165,21 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         window.addMouseMotionListener(mouseInputListener);
     }
     
+    protected void uninstallWindowListeners(JRootPane root) {
+        if (window != null) {
+            window.removeMouseListener(mouseInputListener);
+            window.removeMouseMotionListener(mouseInputListener);
+        }
+    }
+    
     protected void installClientDecorations(JRootPane root) {
         MetroLookAndFeel.getLogger().info("installClientDecorations called...");
         installBorder(root);
 
-        JComponent titlePane = createTitlePane(root);
-        setTitlePane(root, titlePane);
+        JComponent title = createTitlePane(root);
+        setTitlePane(root, title);
         installWindowListeners(root, root.getParent());
-        root.setLayout(new MetroRootPaneLayout());
+        installLayout(root);
         if (window != null) {
             root.revalidate();
             root.repaint();
@@ -168,6 +187,34 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
     }
     
     protected void uninstallClientDecorations(JRootPane root) {
+        uninstallBorder(root);
+        uninstallWindowListeners(root);
+        setTitlePane(root, null);
+        uninstallLayout(root);
+        int ds = root.getWindowDecorationStyle();
+        if (ds == JRootPane.NONE) {
+            root.revalidate();
+            root.repaint();
+        }
+        if (window != null) {
+            window.setCursor(Cursor.getDefaultCursor());
+        }
+        window = null;
+    }
+    
+    protected void installLayout(JRootPane root) {
+        if (layoutManager == null) {
+            layoutManager = new MetroRootPaneLayout();
+        }
+        savedOldLayout = root.getLayout();
+        root.setLayout(layoutManager);
+    }
+    
+    protected void uninstallLayout(JRootPane root) {
+        if (savedOldLayout != null) {
+            root.setLayout(savedOldLayout);
+            savedOldLayout = null;
+        }
     }
     
     protected void installBorder(JRootPane root) {
@@ -179,6 +226,10 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         else {
             LookAndFeel.installBorder(root, borderKeys[ds]);
         }
+    }
+    
+    protected void uninstallBorder(JRootPane root) {
+        LookAndFeel.uninstallBorder(root);
     }
     
     public static class MetroRootPaneLayout implements LayoutManager2 {
@@ -362,7 +413,6 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
             
             if (getTitlePane() != null &&
                         getTitlePane().contains(convertedDragWindowOffset)) {
-                System.err.println("Title pane mouse click.");
                 if ((f != null && ((frameState & Frame.MAXIMIZED_BOTH) == 0)
                         || (d != null))
                         && dragWindowOffset.y >= BORDER_DRAG_THICKNESS
