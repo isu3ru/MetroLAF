@@ -4,6 +4,7 @@
  */
 package net.rubikscomplex.metrolaf;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
@@ -102,11 +103,14 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         closeButton.setFont(MetroLookAndFeel.getCBFont());
         titleLabel.setFont(MetroLookAndFeel.getBodyFont());
         
-        Insets i = new Insets(2, 5, 2, 2);
+        Insets i = new Insets(0, 2, 2, 2);
         minButton.setMargin(i);
         maxButton.setMargin(i);
-        Insets ci = new Insets(2, 4, 2, 2);
+        Insets ci = new Insets(0, 1, 2, 2);
         closeButton.setMargin(ci);
+        minButton.setBackground(Color.WHITE);
+        maxButton.setBackground(Color.WHITE);
+        closeButton.setBackground(Color.WHITE);
         Dimension cbButtonSize = new Dimension(CB_BUTTON_WIDTH, CONTENT_HEIGHT);
         minButton.setFocusPainted(false);
         maxButton.setFocusPainted(false);

@@ -55,6 +55,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
         super.initClassDefaults(table);
         
         Object[] uiDefaults = {
+            "ButtonUI", "net.rubikscomplex.metrolaf.MetroButtonUI",
             "RootPaneUI", "net.rubikscomplex.metrolaf.MetroRootPaneUI",
         };
         
@@ -64,6 +65,8 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
     @Override
     protected void initComponentDefaults(UIDefaults table) {
         super.initComponentDefaults(table);
+        // Remove default Metal button border
+        table.remove("Button.border");
         Object[] uiDefaults = {
             "RootPane.frameBorder", new FrameBorder(),
             "Panel.background", Color.WHITE,
@@ -97,12 +100,14 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             if (k.toString().endsWith(".background")) {
                 MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
             }
+            /*
             if (v instanceof Color) {
                 if (((Color)v).getRed() == 238) {
                     System.err.println("*** "+k.toString());
                     // UIManager.getDefaults().put(k, Color.WHITE);
                 }
             }
+            */
             // System.err.println(k.toString()+": "+v);
             if (v != null && v instanceof FontUIResource) {
                 MetroLookAndFeel.getLogger().log(Level.INFO, "  Replacing: {0}", k.toString());
