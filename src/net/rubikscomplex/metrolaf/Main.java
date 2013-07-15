@@ -5,6 +5,8 @@
 package net.rubikscomplex.metrolaf;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +16,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -33,8 +36,14 @@ public class Main {
         JFrame frame = new JFrame("Metro LAF Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        JLabel label = new JLabel("Hello World");
+        Object[] items = {"Item 1", "Item 2", "Item 3", "Baluga"};
+        JLabel label = new JLabel("Label:");
+        label.setAlignmentY(Component.CENTER_ALIGNMENT);
+        JComboBox cb = new JComboBox(items);
+        frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         frame.getContentPane().add(label);
+        frame.getContentPane().add(cb);
+        cb.setPreferredSize(new Dimension(200, 25));
         
         frame.pack();
         frame.setSize(400, 200);

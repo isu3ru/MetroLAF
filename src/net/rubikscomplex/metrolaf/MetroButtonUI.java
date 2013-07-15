@@ -109,6 +109,6 @@ public class MetroButtonUI extends BasicButtonUI {
         else {
             g.setColor(getDisabledTextColor());
         }
-        SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x+i.left, tr.y+fm.getAscent()+i.top);
+        SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x, tr.y+fm.getAscent());
     }
 }

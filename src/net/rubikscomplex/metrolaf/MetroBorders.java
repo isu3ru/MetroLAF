@@ -40,4 +40,19 @@ public class MetroBorders {
             return ni;
         }
     }
+    
+    public static class ButtonBorder extends AbstractBorder implements UIResource {
+        protected static Insets borderInsets = new Insets(3, 3, 3, 3);
+        
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
+            // Empty, we want no button borders
+        }
+        
+        @Override
+        public Insets getBorderInsets(Component c, Insets ni) {
+            ni.set(3, 3, 3, 3);
+            return ni;
+        }
+    }
 }

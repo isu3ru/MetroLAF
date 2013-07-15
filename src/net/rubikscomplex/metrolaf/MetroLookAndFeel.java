@@ -9,10 +9,12 @@ import java.awt.Font;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
+import net.rubikscomplex.metrolaf.MetroBorders.ButtonBorder;
 import net.rubikscomplex.metrolaf.MetroBorders.FrameBorder;
 
 /**
@@ -56,6 +58,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
         
         Object[] uiDefaults = {
             "ButtonUI", "net.rubikscomplex.metrolaf.MetroButtonUI",
+            "ComboBoxUI", "net.rubikscomplex.metrolaf.MetroComboBoxUI",
             "RootPaneUI", "net.rubikscomplex.metrolaf.MetroRootPaneUI",
         };
         
@@ -66,8 +69,9 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
     protected void initComponentDefaults(UIDefaults table) {
         super.initComponentDefaults(table);
         // Remove default Metal button border
-        table.remove("Button.border");
         Object[] uiDefaults = {
+            "Button.border", new ButtonBorder(),
+            "ComboBox.border", BorderFactory.createLineBorder(Color.LIGHT_GRAY),
             "RootPane.frameBorder", new FrameBorder(),
             "Panel.background", Color.WHITE,
             "Menu.background", Color.WHITE,
@@ -78,8 +82,13 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "Viewport.background", Color.WHITE,
             "Desktop.background", Color.WHITE,
             "OptionPane.background", Color.WHITE,
+            "ComboBox.background", Color.WHITE,
+            "ComboBox.selectionBackground", Color.BLUE,
+            "ComboBox.selectionForeground", Color.WHITE,
+            "Button.focus", Color.BLUE,
+            "MenuItem.selectionBackground", Color.BLUE,
+            "MenuItem.selectionForeground", Color.WHITE,
             "control", Color.WHITE,
-            // "*.font", new Font("Segoe UI", Font.PLAIN, 12)
         };
         table.putDefaults(uiDefaults);
     }
@@ -100,14 +109,13 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             if (k.toString().endsWith(".background")) {
                 MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
             }
-            /*
             if (v instanceof Color) {
-                if (((Color)v).getRed() == 238) {
+                Color c = (Color)v;
+                if (c.getRed() == 163 && c.getGreen() == 184) {
                     System.err.println("*** "+k.toString());
                     // UIManager.getDefaults().put(k, Color.WHITE);
                 }
             }
-            */
             // System.err.println(k.toString()+": "+v);
             if (v != null && v instanceof FontUIResource) {
                 MetroLookAndFeel.getLogger().log(Level.INFO, "  Replacing: {0}", k.toString());
