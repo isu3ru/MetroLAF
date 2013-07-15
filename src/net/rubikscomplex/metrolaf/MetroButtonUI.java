@@ -15,7 +15,6 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.plaf.basic.BasicGraphicsUtils;
 import sun.swing.SwingUtilities2;
 
 /**
@@ -109,7 +108,6 @@ public class MetroButtonUI extends BasicButtonUI {
         else {
             g.setColor(theme.getDisabledTextColor());
         }
-        // SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x, tr.y+fm.getAscent());
-        BasicGraphicsUtils.drawStringUnderlineCharAt(g, t, mi, tr.x, tr.y+fm.getAscent());
+        SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x, tr.y+fm.getAscent());
     }
 }

@@ -75,7 +75,6 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "PopupMenuUI", "net.rubikscomplex.metrolaf.MetroPopupMenuUI",
             "TextFieldUI", "net.rubikscomplex.metrolaf.MetroTextFieldUI",
             "PasswordFieldUI", "net.rubikscomplex.metrolaf.MetroPasswordFieldUI",
-            // "PasswordFieldUI", "javax.swing.plaf.basic.BasicPasswordFieldUI",
         };
         
         table.putDefaults(uiDefaults);
