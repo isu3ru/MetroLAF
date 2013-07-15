@@ -35,11 +35,13 @@ public class MetroPasswordFieldUI extends BasicPasswordFieldUI {
     
     @Override
     public void installListeners() {
+        super.installListeners();
         MetroTextFieldUtils.installListeners(passField);
     }
     
     @Override
     public void uninstallListeners() {
+        super.uninstallListeners();
         MetroTextFieldUtils.uninstallListeners(passField);
     }
     
