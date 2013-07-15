@@ -7,6 +7,7 @@ package net.rubikscomplex.metrolaf;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.BorderFactory;
@@ -49,6 +50,7 @@ public class MetroComboBoxUI extends BasicComboBoxUI {
         JButton b = new JButton(M_BUTTONARROW.toString());
         b.setFont(MetroLookAndFeel.getCBFont());
         b.setBackground(Color.WHITE);
+        b.setMargin(new Insets(2, 2, 0, 0));
         return b;
     }
     

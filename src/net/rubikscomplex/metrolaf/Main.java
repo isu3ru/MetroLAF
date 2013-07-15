@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -40,13 +41,19 @@ public class Main {
         JLabel label = new JLabel("Label:");
         label.setAlignmentY(Component.CENTER_ALIGNMENT);
         JComboBox cb = new JComboBox(items);
+        JLabel label2 = new JLabel("Text box: ");
+        JTextField tf = new JTextField();
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         frame.getContentPane().add(label);
         frame.getContentPane().add(cb);
+        frame.getContentPane().add(label2);
+        frame.getContentPane().add(tf);
         cb.setPreferredSize(new Dimension(200, 25));
+        tf.setPreferredSize(new Dimension(200, 25));
+        
         
         frame.pack();
-        frame.setSize(400, 200);
+        frame.setSize(300, 200);
         frame.setLocation(400, 200);
         for (Component c : frame.getRootPane().getLayeredPane().getComponents()) {
             mlaf.log(Level.INFO, "{0}: {1}", new Object[]{c.getClass().getSimpleName(), c.getSize()});

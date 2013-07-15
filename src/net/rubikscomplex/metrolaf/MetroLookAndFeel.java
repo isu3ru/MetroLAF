@@ -6,9 +6,7 @@ package net.rubikscomplex.metrolaf;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Insets;
 import java.util.Enumeration;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.UIDefaults;
@@ -17,6 +15,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import net.rubikscomplex.metrolaf.MetroBorders.ButtonBorder;
 import net.rubikscomplex.metrolaf.MetroBorders.FrameBorder;
+import net.rubikscomplex.metrolaf.MetroBorders.TextFieldBorder;
 
 /**
  *
@@ -74,6 +73,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
         Object[] uiDefaults = {
             "Button.border", new ButtonBorder(),
             "ComboBox.border", BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+            "TextField.border", new TextFieldBorder(),
             "RootPane.frameBorder", new FrameBorder(),
             "Panel.background", Color.WHITE,
             "Menu.background", Color.WHITE,
@@ -81,14 +81,15 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "MenuBar.background", Color.WHITE,
             "PopupMenu.background", Color.WHITE,
             "Label.background", Color.WHITE,
+            "Label.foreground", new Color(150, 150, 150),
             "Viewport.background", Color.WHITE,
             "Desktop.background", Color.WHITE,
             "OptionPane.background", Color.WHITE,
             "ComboBox.background", Color.WHITE,
-            "ComboBox.selectionBackground", Color.BLUE,
+            "ComboBox.selectionBackground", Color.BLUE.darker(),
             "ComboBox.selectionForeground", Color.WHITE,
             "Button.focus", Color.BLUE,
-            "MenuItem.selectionBackground", Color.BLUE,
+            "MenuItem.selectionBackground", Color.BLUE.darker(),
             "MenuItem.selectionForeground", Color.WHITE,
             "MenuItem.border", BorderFactory.createEmptyBorder(3, 3, 3, 3),
             "control", Color.WHITE,

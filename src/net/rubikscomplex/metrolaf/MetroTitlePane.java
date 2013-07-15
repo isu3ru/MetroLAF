@@ -93,6 +93,7 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         
         titleLabel = new JLabel("Test Title");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setForeground(Color.BLACK);
         
         // Must use unicode mappings for Marlett font
         // See http://www.pclviewer.com/de/resources/pclt/pclt_marlett.html
@@ -105,11 +106,6 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         closeButton.setFont(MetroLookAndFeel.getCBFont());
         titleLabel.setFont(MetroLookAndFeel.getBodyFont());
         
-        Insets i = new Insets(2, 5, 2, 2);
-        minButton.setMargin(i);
-        maxButton.setMargin(i);
-        Insets ci = new Insets(2, 4, 2, 2);
-        closeButton.setMargin(ci);
         minButton.setBackground(Color.WHITE);
         maxButton.setBackground(Color.WHITE);
         closeButton.setBackground(Color.WHITE);
@@ -120,6 +116,11 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         minButton.setAlignmentY(Component.TOP_ALIGNMENT);
         maxButton.setAlignmentY(Component.TOP_ALIGNMENT);
         closeButton.setAlignmentY(Component.TOP_ALIGNMENT);
+        Insets i = new Insets(2, 5, 2, 2);
+        minButton.setMargin(i);
+        maxButton.setMargin(i);
+        Insets ci = new Insets(2, 4, 2, 2);
+        closeButton.setMargin(ci);
         minButton.setPreferredSize(cbButtonSize);
         maxButton.setPreferredSize(cbButtonSize);
         closeButton.setPreferredSize(cbButtonSize);
