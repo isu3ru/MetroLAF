@@ -141,7 +141,6 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         if (titlePane != null) {
             layeredPane.add(titlePane, JLayeredPane.FRAME_CONTENT_LAYER);
             layeredPane.setComponentZOrder(titlePane, 0);
-            // root.getContentPane().setBackground(Color.blue);
             titlePane.setVisible(true);
         }
         this.titlePane = titlePane;

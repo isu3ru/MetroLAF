@@ -8,13 +8,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
-import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
@@ -25,10 +23,6 @@ import sun.swing.SwingUtilities2;
  * @author Chris Davoren <cdavoren@gmail.com>
  */
 public class MetroButtonUI extends BasicButtonUI {
-    protected Color focusColor;
-    protected Color selectColor;
-    protected Color disabledTextColor;
-    
     public static ComponentUI createUI(JComponent c) {
         return new MetroButtonUI();
     }
@@ -42,30 +36,16 @@ public class MetroButtonUI extends BasicButtonUI {
         }
     }
     
-    protected Color getSelectColor() {
-        selectColor = UIManager.getColor(getPropertyPrefix() + "select");
-        return selectColor;
-    }
-    
-    protected Color getDisabledTextColor() {
-        disabledTextColor = UIManager.getColor(getPropertyPrefix() + "disabledText");
-        return disabledTextColor;
-    }
-    
-    protected Color getFocusColor() {
-        focusColor = UIManager.getColor(getPropertyPrefix() + "focus");
-        return focusColor;
-    }
-    
     @Override
     public void update(Graphics g, JComponent c) {
         AbstractButton b = (AbstractButton)c;
+        MetroTheme theme = MetroLookAndFeel.getCurrentMetroTheme();
         if (b.isContentAreaFilled() && c.isEnabled()) {
             ButtonModel m = b.getModel();
-            if ((!m.isArmed() && !m.isPressed()) || m.isRollover()) {
+            if ((!m.isArmed() && !m.isPressed()) || m.isRollover() || b.hasFocus()) {
                 Color bg = b.getBackground();
-                if (m.isRollover()) {
-                    bg = bg.darker();
+                if (m.isRollover() || b.hasFocus()) {
+                    bg = theme.getButtonHighlightBackground();
                 }
                 g.setColor(bg);
                 g.fillRect(0, 0, b.getWidth(), b.getHeight());
@@ -80,7 +60,7 @@ public class MetroButtonUI extends BasicButtonUI {
     protected void paintButtonPressed(Graphics g, AbstractButton b) {
         if (b.isContentAreaFilled()) {
             Dimension d = b.getSize();
-            g.setColor(getSelectColor());
+            g.setColor(MetroLookAndFeel.getCurrentMetroTheme().getButtonPressedBackground());
             g.fillRect(0, 0, d.width, d.height);
         }
     }
@@ -103,7 +83,7 @@ public class MetroButtonUI extends BasicButtonUI {
             fr.setBounds(ir);
         }
         
-        g.setColor(getFocusColor());
+        g.setColor(MetroLookAndFeel.getCurrentMetroTheme().getButtonForeground());
         g.drawRect(fr.x-1, fr.y-1, fr.width+1, fr.height+1);
     }
     
@@ -111,14 +91,23 @@ public class MetroButtonUI extends BasicButtonUI {
     protected void paintText(Graphics g, AbstractButton b, Rectangle tr, String t) {
         ButtonModel m = b.getModel();
         FontMetrics fm = SwingUtilities2.getFontMetrics(b, g);
+        MetroTheme theme = MetroLookAndFeel.getCurrentMetroTheme();
         // Insets i = b.getMargin();
         int mi = b.getDisplayedMnemonicIndex();
         
         if (m.isEnabled()) {
-            g.setColor(b.getForeground());
+            if (m.isPressed()) {
+                g.setColor(theme.getButtonPressedForeground());
+            }
+            if (m.isRollover()) {
+                g.setColor(theme.getButtonHighlightForeground());
+            }
+            else {
+                g.setColor(b.getForeground());
+            }
         }
         else {
-            g.setColor(getDisabledTextColor());
+            g.setColor(theme.getDisabledTextColor());
         }
         // SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x, tr.y+fm.getAscent());
         BasicGraphicsUtils.drawStringUnderlineCharAt(g, t, mi, tr.x, tr.y+fm.getAscent());

@@ -20,11 +20,15 @@ import javax.swing.plaf.UIResource;
  * @author Chris Davoren <cdavoren@gmail.com>
  */
 public class MetroBorders {
+    protected static MetroTheme getCurrentTheme() {
+        return MetroLookAndFeel.getCurrentMetroTheme();
+    }
+    
     public static class FrameBorder extends AbstractBorder implements UIResource {
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
-            Color foreground = Color.BLUE.darker();
-            Color inactiveForeground = Color.GRAY;
+            Color foreground = getCurrentTheme().getFrameBorder();
+            Color inactiveForeground = getCurrentTheme().getDisabledTextColor();
             
             g.setColor(foreground);
             
@@ -72,12 +76,16 @@ public class MetroBorders {
         }
     }
     
-    public static class TextFieldBorder extends AbstractBorder implements UIResource {
-        protected static Insets bi = new Insets(5, 6, 5, 6);
+    public static class ControlBorder extends AbstractBorder implements UIResource {
+        protected static Insets bi = new Insets(1, 1, 1, 1);
 
         @Override 
         public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
-            g.setColor(Color.LIGHT_GRAY);
+            if (c.hasFocus()) {
+                g.setColor(MetroLookAndFeel.getCurrentMetroTheme().getControlFocusBorder());
+            }else {
+                g.setColor(MetroLookAndFeel.getCurrentMetroTheme().getControlBorder());
+            }
             g.drawRect(x, y, w-1, h-1);
         }
         
@@ -89,6 +97,14 @@ public class MetroBorders {
         @Override
         public Insets getBorderInsets(Component c, Insets ni) {
             ni.set(bi.top, bi.left, bi.bottom, bi.right);
+            return ni;
+        }
+    }
+    
+    public static class TextFieldBorder extends ControlBorder {
+        @Override
+        public Insets getBorderInsets(Component c, Insets ni) {
+            ni.set(5, 6, 5, 5);
             return ni;
         }
     }

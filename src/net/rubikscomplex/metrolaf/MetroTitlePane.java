@@ -127,12 +127,17 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         maxButton.setPreferredSize(cbButtonSize);
         closeButton.setPreferredSize(cbButtonSize);
         
+        minButton.setFocusable(false);
+        maxButton.setFocusable(false);
+        closeButton.setFocusable(false);
+        
         titleLabel.setAlignmentY(Component.TOP_ALIGNMENT);
         Dimension tld = titleLabel.getSize();
         titleLabel.setSize(tld.width, CONTENT_HEIGHT);
         createMenuBar();
         menuBar.setSize(ICON_WIDTH, ICON_HEIGHT);
         menuBar.setAlignmentY(Component.TOP_ALIGNMENT);
+        menuBar.setFocusable(false);
         
         // setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new MetroTitlePaneLayout());

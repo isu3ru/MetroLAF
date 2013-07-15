@@ -7,6 +7,7 @@ package net.rubikscomplex.metrolaf;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Enumeration;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.UIDefaults;
@@ -15,6 +16,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import net.rubikscomplex.metrolaf.MetroBorders.ButtonBorder;
 import net.rubikscomplex.metrolaf.MetroBorders.FrameBorder;
+import net.rubikscomplex.metrolaf.MetroBorders.ControlBorder;
 import net.rubikscomplex.metrolaf.MetroBorders.TextFieldBorder;
 
 /**
@@ -26,6 +28,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
     protected static Logger logger = null;
     protected static Font bodyFont = null;
     protected static Font cbFont = null;
+    protected static MetroTheme currentTheme = new MetroBlueTheme();
     
     public static Logger getLogger() {
         if (logger == null) {
@@ -51,6 +54,14 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
         return cbFont;
     }
     
+    public static MetroTheme getCurrentMetroTheme() {
+        return currentTheme;
+    }
+    
+    public static void setCurrentMetroTheme(MetroTheme theme) {
+        currentTheme = theme;
+    }
+    
     @Override
     protected void initClassDefaults(UIDefaults table) {
         MetroLookAndFeel.getLogger().info("initClassDefaults called...");
@@ -72,50 +83,43 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
     @Override
     protected void initComponentDefaults(UIDefaults table) {
         super.initComponentDefaults(table);
-        // Remove default Metal button border
+        
+        MetroTheme theme = getCurrentMetroTheme();
         Object[] uiDefaults = {
             "Button.border", new ButtonBorder(),
-            "ComboBox.border", BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+            "ComboBox.border", new ControlBorder(),
             "TextField.border", new TextFieldBorder(),
             "PasswordField.border", new TextFieldBorder(),
             "RootPane.frameBorder", new FrameBorder(),
-            "Panel.background", Color.WHITE,
-            "Menu.background", Color.WHITE,
-            "MenuItem.background", Color.WHITE,
-            "MenuBar.background", Color.WHITE,
-            "PopupMenu.background", Color.WHITE,
-            "Label.background", Color.WHITE,
-            "Label.foreground", new Color(150, 150, 150),
-            "Viewport.background", Color.WHITE,
-            "Desktop.background", Color.WHITE,
-            "OptionPane.background", Color.WHITE,
-            "ComboBox.background", Color.WHITE,
-            "ComboBox.selectionBackground", Color.BLUE.darker(),
-            "ComboBox.selectionForeground", Color.WHITE,
-            "Button.focus", Color.BLUE,
-            "MenuItem.selectionBackground", Color.BLUE.darker(),
-            "MenuItem.selectionForeground", Color.WHITE,
+            "Panel.background", theme.getSecondary(),
+            "Menu.background", theme.getSecondary(),
+            "MenuItem.background", theme.getSecondary(),
+            "MenuBar.background", theme.getSecondary(),
+            "PopupMenu.background", theme.getSecondary(),
+            "Label.background", theme.getSecondary(),
+            "Label.foreground", theme.getSecondary2(),
+            "Viewport.background", theme.getSecondary(),
+            "Desktop.background", theme.getSecondary(),
+            "OptionPane.background", theme.getSecondary(),
+            "ComboBox.background", theme.getSecondary(),
+            "ComboBox.selectionBackground", theme.getButtonHighlightBackground(),
+            "ComboBox.selectionForeground", theme.getButtonHighlightForeground(),
+            "Button.focus", theme.getPrimary2(),
+            "MenuItem.selectionBackground", theme.getButtonHighlightBackground(),
+            "MenuItem.selectionForeground", theme.getButtonHighlightForeground(),
             "MenuItem.border", BorderFactory.createEmptyBorder(3, 3, 3, 3),
-            "control", Color.WHITE,
+            "control", theme.getSecondary(),
         };
         table.putDefaults(uiDefaults);
     }
     
     public static void setUIFont(Font f) {
-        // System.err.println(UIManager.getDefaults().get("TabbedPane.font"));
-        /*
-        UIManager.getDefaults().put("Panel.background", Color.WHITE);
-        UIManager.getDefaults().put("Menu.background", Color.WHITE);
-        UIManager.getDefaults().put("MenuItem.background", Color.WHITE);
-        UIManager.getDefaults().put("MenuBar.background", Color.WHITE);
-        UIManager.getDefaults().put("PopupMenu.background", Color.WHITE);
-        */
         Enumeration keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object k = keys.nextElement();
             Object v = UIManager.getDefaults().get(k);
-            if (k.toString().endsWith(".background")) {
-                // MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
+            if (k.toString().startsWith("Button.")) {
+                MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
             }
             if (v instanceof Color) {
                 Color c = (Color)v;
