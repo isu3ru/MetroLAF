@@ -116,11 +116,13 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         minButton.setAlignmentY(Component.TOP_ALIGNMENT);
         maxButton.setAlignmentY(Component.TOP_ALIGNMENT);
         closeButton.setAlignmentY(Component.TOP_ALIGNMENT);
+
         Insets i = new Insets(2, 5, 2, 2);
         minButton.setMargin(i);
         maxButton.setMargin(i);
         Insets ci = new Insets(2, 4, 2, 2);
         closeButton.setMargin(ci);
+        
         minButton.setPreferredSize(cbButtonSize);
         maxButton.setPreferredSize(cbButtonSize);
         closeButton.setPreferredSize(cbButtonSize);

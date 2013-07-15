@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.plaf.basic.BasicGraphicsUtils;
 import sun.swing.SwingUtilities2;
 
 /**
@@ -110,7 +111,7 @@ public class MetroButtonUI extends BasicButtonUI {
     protected void paintText(Graphics g, AbstractButton b, Rectangle tr, String t) {
         ButtonModel m = b.getModel();
         FontMetrics fm = SwingUtilities2.getFontMetrics(b, g);
-        Insets i = b.getMargin();
+        // Insets i = b.getMargin();
         int mi = b.getDisplayedMnemonicIndex();
         
         if (m.isEnabled()) {
@@ -119,6 +120,7 @@ public class MetroButtonUI extends BasicButtonUI {
         else {
             g.setColor(getDisabledTextColor());
         }
-        SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x, tr.y+fm.getAscent());
+        // SwingUtilities2.drawStringUnderlineCharAt(b, g, t, mi, tr.x, tr.y+fm.getAscent());
+        BasicGraphicsUtils.drawStringUnderlineCharAt(g, t, mi, tr.x, tr.y+fm.getAscent());
     }
 }

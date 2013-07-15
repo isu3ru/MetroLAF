@@ -12,6 +12,7 @@ import java.awt.Window;
 import javax.swing.AbstractButton;
 import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
+import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.UIResource;
 
 /**
@@ -36,6 +37,11 @@ public class MetroBorders {
         }
         
         @Override
+        public Insets getBorderInsets(Component c) {
+            return getBorderInsets(c, new InsetsUIResource(0, 0, 0, 0));
+        }
+        
+        @Override
         public Insets getBorderInsets(Component c, Insets ni) {
             ni.set(1, 1, 1, 1);
             return ni;
@@ -47,12 +53,12 @@ public class MetroBorders {
         
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
-            // Empty, we want no button borders
+            // Empty, we want empty (invisible) button borders
         }
         
         @Override
         public Insets getBorderInsets(Component c) {
-            return getBorderInsets(c, new Insets(0, 0, 0, 0));
+            return getBorderInsets(c, new InsetsUIResource(0, 0, 0, 0));
         }
         
         @Override
@@ -77,7 +83,7 @@ public class MetroBorders {
         
         @Override
         public Insets getBorderInsets(Component c) {
-            return getBorderInsets(c, new Insets(0, 0, 0, 0));
+            return getBorderInsets(c, new InsetsUIResource(0, 0, 0, 0));
         }
         
         @Override
