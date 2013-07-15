@@ -13,6 +13,7 @@ import java.awt.Rectangle;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.JComponent;
+import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -29,6 +30,15 @@ public class MetroButtonUI extends BasicButtonUI {
     
     public static ComponentUI createUI(JComponent c) {
         return new MetroButtonUI();
+    }
+    
+    @Override
+    public void installUI(JComponent c) {
+        super.installUI(c);
+        // MetroLookAndFeel.getLogger().info("installUI called... (" + c.toString() + ")");
+        if (c instanceof JMenuItem) {
+            MetroLookAndFeel.getLogger().info("*** ButtonUI called for JMenuItem.");
+        }
     }
     
     protected Color getSelectColor() {

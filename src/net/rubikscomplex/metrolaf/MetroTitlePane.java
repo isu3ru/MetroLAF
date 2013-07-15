@@ -26,6 +26,7 @@ import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -39,6 +40,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 import sun.awt.SunToolkit;
 
 /**
@@ -189,6 +191,7 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
     
     public void createMenuBar() {
         menuBar = new SystemMenuBar();
+        menuBar.setUI(new MetroMenuBarUI());
         menuBar.setFocusable(false);
         menuBar.setBorderPainted(true);
         menuBar.add(createMenu());
@@ -199,40 +202,37 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         if (rootPane.getWindowDecorationStyle() == JRootPane.FRAME) {
             addMenuItems(menu);
         }
+        Dimension d = menu.getPreferredSize();
         return menu;
     }
     
     private void addMenuItems(JMenu menu) {
         // Locale locale = rootPane.getLocale();
+        int bw = MetroMenuBarUI.MENU_ITEM_MARGIN;
+        Border margin = BorderFactory.createEmptyBorder(bw, bw, bw, bw);
         JMenuItem mi = menu.add(restoreAction);
-        int mnemonic = KeyEvent.VK_R;
+        mi.setMnemonic(KeyEvent.VK_R);
+        mi.setBorder(margin);
+        Dimension d = mi.getPreferredSize();
+        d.width = Math.max(MetroMenuBarUI.MIN_MENU_WIDTH, d.width);
+        mi.setPreferredSize(d);
+        mi.setMinimumSize(d);
 
-        if (mnemonic != -1) {
-            mi.setMnemonic(mnemonic);
+        mi = menu.add(minimizeAction);
+        mi.setMnemonic(KeyEvent.VK_M);
+        mi.setBorder(margin);
+        
+        if (Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH)) {
+            mi = menu.add(maximizeAction);
+            mi.setMnemonic(KeyEvent.VK_X);
+            mi.setBorder(margin);
         }
         
-        mi = menu.add(minimizeAction);
-        mnemonic = KeyEvent.VK_M;
-        if (mnemonic != -1) {
-            mi.setMnemonic(mnemonic);
-        }
-
-        if (Toolkit.getDefaultToolkit().isFrameStateSupported(
-                Frame.MAXIMIZED_BOTH)) {
-            mi = menu.add(maximizeAction);
-            mnemonic = KeyEvent.VK_X;
-            if (mnemonic != -1) {
-                mi.setMnemonic(mnemonic);
-            }
-        }
-
         menu.add(new JSeparator());
-
+        
         mi = menu.add(closeAction);
-        mnemonic = KeyEvent.VK_C;
-        if (mnemonic != -1) {
-            mi.setMnemonic(mnemonic);
-        }
+        mi.setMnemonic(KeyEvent.VK_C);
+        mi.setBorder(margin);
     }
     
     public void prepareButtons() {

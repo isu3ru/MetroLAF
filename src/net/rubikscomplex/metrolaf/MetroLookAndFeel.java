@@ -6,6 +6,7 @@ package net.rubikscomplex.metrolaf;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +61,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "ButtonUI", "net.rubikscomplex.metrolaf.MetroButtonUI",
             "ComboBoxUI", "net.rubikscomplex.metrolaf.MetroComboBoxUI",
             "RootPaneUI", "net.rubikscomplex.metrolaf.MetroRootPaneUI",
+            "MenuBarUI", "net.rubikscomplex.metrolaf.MetroMenuBarUIdasdfsd",
         };
         
         table.putDefaults(uiDefaults);
@@ -88,6 +90,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "Button.focus", Color.BLUE,
             "MenuItem.selectionBackground", Color.BLUE,
             "MenuItem.selectionForeground", Color.WHITE,
+            "MenuItem.border", BorderFactory.createEmptyBorder(3, 3, 3, 3),
             "control", Color.WHITE,
         };
         table.putDefaults(uiDefaults);
@@ -107,18 +110,18 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             Object k = keys.nextElement();
             Object v = UIManager.getDefaults().get(k);
             if (k.toString().endsWith(".background")) {
-                MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
+                // MetroLookAndFeel.getLogger().log(Level.INFO, "{0}: {1}", new Object[]{k.toString(), v});
             }
             if (v instanceof Color) {
                 Color c = (Color)v;
                 if (c.getRed() == 163 && c.getGreen() == 184) {
-                    System.err.println("*** "+k.toString());
+                    // System.err.println("*** "+k.toString());
                     // UIManager.getDefaults().put(k, Color.WHITE);
                 }
             }
             // System.err.println(k.toString()+": "+v);
             if (v != null && v instanceof FontUIResource) {
-                MetroLookAndFeel.getLogger().log(Level.INFO, "  Replacing: {0}", k.toString());
+                // MetroLookAndFeel.getLogger().log(Level.INFO, "  Replacing: {0}", k.toString());
                 UIManager.getDefaults().put(k, f);
             }
         }
