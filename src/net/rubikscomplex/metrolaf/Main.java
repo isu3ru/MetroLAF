@@ -41,15 +41,22 @@ public class Main {
         JLabel label = new JLabel("Label:");
         label.setAlignmentY(Component.CENTER_ALIGNMENT);
         JComboBox cb = new JComboBox(items);
-        JLabel label2 = new JLabel("Text box: ");
-        JTextField tf = new JTextField();
+        JLabel label2 = new JLabel("Text field: ");
+        MetroTextField tf = new MetroTextField();
+        tf.setEmptyPrompt("username");
+        JLabel label3 = new JLabel("Pass field: ");
+        MetroPasswordField pf = new MetroPasswordField();
+        pf.setEmptyPrompt("password");
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         frame.getContentPane().add(label);
         frame.getContentPane().add(cb);
         frame.getContentPane().add(label2);
         frame.getContentPane().add(tf);
+        frame.getContentPane().add(label3);
+        frame.getContentPane().add(pf);
         cb.setPreferredSize(new Dimension(200, 25));
         tf.setPreferredSize(new Dimension(200, 25));
+        pf.setPreferredSize(new Dimension(200, 25));
         
         
         frame.pack();

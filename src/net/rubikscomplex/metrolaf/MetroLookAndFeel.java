@@ -61,6 +61,9 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "ComboBoxUI", "net.rubikscomplex.metrolaf.MetroComboBoxUI",
             "RootPaneUI", "net.rubikscomplex.metrolaf.MetroRootPaneUI",
             "MenuBarUI", "net.rubikscomplex.metrolaf.MetroMenuBarUIdasdfsd",
+            "PopupMenuUI", "net.rubikscomplex.metrolaf.MetroPopupMenuUI",
+            "TextFieldUI", "net.rubikscomplex.metrolaf.MetroTextFieldUI",
+            "PasswordFieldUI", "net.rubikscomplex.metrolaf.MetroTextFieldUI"
         };
         
         table.putDefaults(uiDefaults);
@@ -74,6 +77,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "Button.border", new ButtonBorder(),
             "ComboBox.border", BorderFactory.createLineBorder(Color.LIGHT_GRAY),
             "TextField.border", new TextFieldBorder(),
+            "PasswordField.border", new TextFieldBorder(),
             "RootPane.frameBorder", new FrameBorder(),
             "Panel.background", Color.WHITE,
             "Menu.background", Color.WHITE,

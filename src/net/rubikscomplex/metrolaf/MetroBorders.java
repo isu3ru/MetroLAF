@@ -60,7 +60,6 @@ public class MetroBorders {
             Insets ci = new Insets(0, 0, 0, 0);
             if (c instanceof AbstractButton) {
                 ci = ((AbstractButton)c).getMargin();
-                System.out.println(ci.toString());
             }
             ni.set(bi.top+ci.top, bi.left+ci.left, bi.bottom+ci.bottom, bi.right+ci.right);
             return ni;
