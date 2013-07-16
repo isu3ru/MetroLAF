@@ -208,9 +208,8 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
     private JMenu createMenu() {
         JMenu menu = new JMenu("__");
         if (rootPane.getWindowDecorationStyle() == JRootPane.FRAME) {
-            addMenuItems(menu);
+           addMenuItems(menu);
         }
-        Dimension d = menu.getPreferredSize();
         return menu;
     }
     

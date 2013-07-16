@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.PrintStream;
 import java.text.DateFormat;
@@ -18,10 +19,13 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -39,6 +43,7 @@ public class Main {
     
     private static void createAndShowGUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
+        JDialog.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Metro LAF Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -54,6 +59,7 @@ public class Main {
         pf.setEmptyPrompt("password");
         JButton button = new JButton("Button");
         button.setMnemonic(KeyEvent.VK_B);
+        button.setAction(new MainAction("Dialog", frame));
         JPanel p = new JPanel();
         JLabel pl = new JLabel("Panel label.");
         p.setPreferredSize(new Dimension(400, 400));
@@ -69,7 +75,6 @@ public class Main {
         pbi.setIndeterminate(true);
         pbi.setPreferredSize(new Dimension(200, 10));
         pbi.setForeground(Color.RED);
-        // pbi.setBorderPainted(false);
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         frame.getContentPane().add(label);
         frame.getContentPane().add(cb);
@@ -94,6 +99,18 @@ public class Main {
         frame.setVisible(true);
     }
     
+    public static class MainAction extends AbstractAction {
+        protected Component parent;
+        public MainAction(String text, Component parent) {
+            super(text);
+            this.parent = parent;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(parent, "Message");
+        }
+    }
     public static class MLAFFormatter extends Formatter {
         protected final DateFormat df = new SimpleDateFormat("HH:mm:ss:SSS");
         

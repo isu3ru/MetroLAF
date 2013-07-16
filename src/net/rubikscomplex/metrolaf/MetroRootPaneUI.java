@@ -4,6 +4,7 @@
  */
 package net.rubikscomplex.metrolaf;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -156,6 +157,9 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         
         if (window == null) {
             return;
+        }
+        if (window instanceof Dialog) {
+            root.setBackground(MetroLookAndFeel.getCurrentMetroTheme().getDefaultBackground());
         }
         if (mouseInputListener == null) {
             mouseInputListener = new MouseInputHandler();
@@ -310,7 +314,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
             int height = root.getHeight() - getInsetHeight(root);
             int nextY = 0;
             
-            if (window instanceof Frame && ((Frame)window).getExtendedState() != Frame.MAXIMIZED_BOTH) {
+            if ((window instanceof Frame && ((Frame)window).getExtendedState() != Frame.MAXIMIZED_BOTH) || (window instanceof Dialog)) {
                 nextY += 3;
             }
             

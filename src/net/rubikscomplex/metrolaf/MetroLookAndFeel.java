@@ -94,23 +94,34 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "TextField.border", new TextFieldBorder(),
             "PasswordField.border", new TextFieldBorder(),
             "RootPane.frameBorder", new FrameBorder(),
-            "Panel.background", theme.getSecondary(),
-            "Menu.background", theme.getSecondary(),
-            "MenuItem.background", theme.getSecondary(),
-            "MenuBar.background", theme.getSecondary(),
-            "PopupMenu.background", theme.getSecondary(),
-            "Label.background", theme.getSecondary(),
+            "RootPane.plainDialogBorder", new FrameBorder(),
+            "RootPane.informationDialogBorder", new FrameBorder(),
+            "RootPane.errorDialogBorder", new FrameBorder(),
+            "RootPane.colorChooserDialogBorder", new FrameBorder(),
+            "RootPane.fileChooserDialogBorder", new FrameBorder(),
+            "RootPane.questionDialogBorder", new FrameBorder(),
+            "RootPane.warningDialogBorder", new FrameBorder(),
+            "RootPane.background", theme.getDefaultBackground(),
+            "Panel.background", theme.getDefaultBackground(),
+            "Menu.background", theme.getDefaultBackground(),
+            "MenuItem.background", theme.getDefaultBackground(),
+            "MenuBar.background", theme.getDefaultBackground(),
+            "PopupMenu.background", theme.getDefaultBackground(),
+            "Label.background", theme.getDefaultBackground(),
             "Label.foreground", theme.getSecondary2(),
-            "Viewport.background", theme.getSecondary(),
-            "Desktop.background", theme.getSecondary(),
-            "OptionPane.background", theme.getSecondary(),
-            "ComboBox.background", theme.getSecondary(),
-            "ScrollPane.background", theme.getSecondary(),
+            "Viewport.background", theme.getDefaultBackground(),
+            "Desktop.background", theme.getDefaultBackground(),
+            "OptionPane.background", theme.getDefaultBackground(),
+            "ComboBox.background", theme.getDefaultBackground(),
+            "ScrollPane.background", theme.getDefaultBackground(),
             "ScrollPane.border", new ControlBorder(),
-            "ScrollBar.background", theme.getSecondary(),
+            "ScrollBar.background", theme.getDefaultBackground(),
             "ProgressBar.background", theme.getScrollBarBackground(),
             "ProgressBar.foreground", theme.getButtonHighlightBackground(),
             "ProgressBar.border", BorderFactory.createEmptyBorder(),
+            "ToolBar.background", theme.getDefaultBackground(),
+            "ToolBar.dockingBackground", theme.getDefaultBackground(),
+            "ToolBar.floatingBackground", theme.getDefaultBackground(),
             "ComboBox.selectionBackground", theme.getButtonHighlightBackground(),
             "ComboBox.selectionForeground", theme.getButtonHighlightForeground(),
             "Button.focus", theme.getPrimary2(),
@@ -132,8 +143,9 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             }
             if (v instanceof Color) {
                 Color c = (Color)v;
-                if (c.getRed() == 163 && c.getGreen() == 184) {
-                    // System.err.println("*** "+k.toString());
+                // if (c.getRed() == 163 && c.getGreen() == 184) {
+                if (c.getRed() == 240) {
+                    System.err.println("*** "+k.toString());
                     // UIManager.getDefaults().put(k, Color.WHITE);
                 }
             }
