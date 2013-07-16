@@ -231,12 +231,13 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         LookAndFeel.uninstallBorder(root);
     }
     
-    public static class MetroRootPaneLayout implements LayoutManager2 {
-        protected enum Size {
-            PREFERRED,
-            MINIMUM,
-            MAXIMUM;
-        }
+    protected enum Size {
+        PREFERRED,
+        MINIMUM,
+        MAXIMUM;
+    }
+    
+    public class MetroRootPaneLayout implements LayoutManager2 {
         
         protected Dimension getCPDimensions(JRootPane root, Size s) {
             if (root.getContentPane() != null) {
@@ -309,6 +310,10 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
             int height = root.getHeight() - getInsetHeight(root);
             int nextY = 0;
             
+            if (window instanceof Frame && ((Frame)window).getExtendedState() != Frame.MAXIMIZED_BOTH) {
+                nextY += 3;
+            }
+            
             if (root.getLayeredPane() != null) {
                 root.getLayeredPane().setBounds(i.left, i.top, width, height);
             }
@@ -318,7 +323,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
             if (root.getWindowDecorationStyle() != JRootPane.NONE) {
                 JComponent titlePane = ((MetroRootPaneUI)root.getUI()).getTitlePane();
                 if (titlePane != null) {
-                    titlePane.setBounds(0, 0, width, MetroTitlePane.PANE_HEIGHT);
+                    titlePane.setBounds(0, nextY, width, MetroTitlePane.PANE_HEIGHT);
                     nextY += MetroTitlePane.PANE_HEIGHT;
                 }
             }
