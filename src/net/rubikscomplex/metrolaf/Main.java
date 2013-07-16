@@ -21,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -50,6 +52,14 @@ public class Main {
         pf.setEmptyPrompt("password");
         JButton button = new JButton("Button");
         button.setMnemonic(KeyEvent.VK_B);
+        JPanel p = new JPanel();
+        JLabel pl = new JLabel("Panel label.");
+        p.setPreferredSize(new Dimension(400, 400));
+        p.add(pl);
+        JScrollPane sp = new JScrollPane(p);
+        sp.getHorizontalScrollBar().setUnitIncrement(20);
+        sp.getVerticalScrollBar().setUnitIncrement(20);
+        sp.setPreferredSize(new Dimension(200, 200));
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         frame.getContentPane().add(label);
         frame.getContentPane().add(cb);
@@ -58,13 +68,14 @@ public class Main {
         frame.getContentPane().add(label3);
         frame.getContentPane().add(pf);
         frame.getContentPane().add(button);
+        frame.getContentPane().add(sp);
         cb.setPreferredSize(new Dimension(200, 25));
         tf.setPreferredSize(new Dimension(200, 25));
         pf.setPreferredSize(new Dimension(200, 25));
         
         
         frame.pack();
-        frame.setSize(300, 200);
+        frame.setSize(new Dimension(300, 400));
         frame.setLocation(400, 200);
         for (Component c : frame.getRootPane().getLayeredPane().getComponents()) {
             mlaf.log(Level.INFO, "{0}: {1}", new Object[]{c.getClass().getSimpleName(), c.getSize()});

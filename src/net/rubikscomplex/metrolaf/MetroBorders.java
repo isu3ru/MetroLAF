@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.Window;
 import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
 import javax.swing.plaf.InsetsUIResource;
@@ -73,6 +74,22 @@ public class MetroBorders {
             }
             ni.set(bi.top+ci.top, bi.left+ci.left, bi.bottom+ci.bottom, bi.right+ci.right);
             return ni;
+        }
+    }
+    
+    public static class RolloverButtonBorder extends ButtonBorder {
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int w, int h) {
+            AbstractButton b = (AbstractButton)c;
+            ButtonModel m = b.getModel();
+            MetroTheme theme = MetroLookAndFeel.getCurrentMetroTheme();
+            if (m.isRollover()) {
+                g.setColor(theme.getPrimary());
+            }
+            else {
+                g.setColor(theme.getSecondary2());
+            }
+            g.drawRect(x+1, y+1, w-3, h-3);
         }
     }
     

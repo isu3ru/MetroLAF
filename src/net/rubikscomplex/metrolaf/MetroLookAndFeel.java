@@ -75,6 +75,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "PopupMenuUI", "net.rubikscomplex.metrolaf.MetroPopupMenuUI",
             "TextFieldUI", "net.rubikscomplex.metrolaf.MetroTextFieldUI",
             "PasswordFieldUI", "net.rubikscomplex.metrolaf.MetroPasswordFieldUI",
+            "ScrollBarUI", "net.rubikscomplex.metrolaf.MetroScrollBarUI",
         };
         
         table.putDefaults(uiDefaults);
@@ -87,6 +88,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
         MetroTheme theme = getCurrentMetroTheme();
         Object[] uiDefaults = {
             "Button.border", new ButtonBorder(),
+            "Button.foreground", theme.getButtonForeground(),
             "ComboBox.border", new ControlBorder(),
             "TextField.border", new TextFieldBorder(),
             "PasswordField.border", new TextFieldBorder(),
@@ -102,6 +104,9 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "Desktop.background", theme.getSecondary(),
             "OptionPane.background", theme.getSecondary(),
             "ComboBox.background", theme.getSecondary(),
+            "ScrollPane.background", theme.getSecondary(),
+            "ScrollPane.border", new ControlBorder(),
+            "ScrollBar.background", theme.getSecondary(),
             "ComboBox.selectionBackground", theme.getButtonHighlightBackground(),
             "ComboBox.selectionForeground", theme.getButtonHighlightForeground(),
             "Button.focus", theme.getPrimary2(),

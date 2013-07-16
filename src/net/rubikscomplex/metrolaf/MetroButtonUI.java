@@ -7,12 +7,13 @@ package net.rubikscomplex.metrolaf;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics;                                                                                          
 import java.awt.Rectangle;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollBar;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
 import sun.swing.SwingUtilities2;
@@ -39,7 +40,7 @@ public class MetroButtonUI extends BasicButtonUI {
     public void update(Graphics g, JComponent c) {
         AbstractButton b = (AbstractButton)c;
         MetroTheme theme = MetroLookAndFeel.getCurrentMetroTheme();
-        if (b.isContentAreaFilled() && c.isEnabled()) {
+        if (b.isContentAreaFilled() && c.isEnabled() && !(b.getParent() instanceof JScrollBar)) {
             ButtonModel m = b.getModel();
             if ((!m.isArmed() && !m.isPressed()) || m.isRollover() || b.hasFocus()) {
                 Color bg = b.getBackground();
@@ -59,8 +60,9 @@ public class MetroButtonUI extends BasicButtonUI {
     protected void paintButtonPressed(Graphics g, AbstractButton b) {
         if (b.isContentAreaFilled()) {
             Dimension d = b.getSize();
+            int i = (b.getParent() instanceof JScrollBar) ? 1 : 0;
             g.setColor(MetroLookAndFeel.getCurrentMetroTheme().getButtonPressedBackground());
-            g.fillRect(0, 0, d.width, d.height);
+            g.fillRect(i, i, d.width-i-1, d.height-i-1);
         }
     }
     
