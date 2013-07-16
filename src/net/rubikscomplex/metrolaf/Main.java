@@ -4,6 +4,7 @@
  */
 package net.rubikscomplex.metrolaf;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -22,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -60,6 +62,14 @@ public class Main {
         sp.getHorizontalScrollBar().setUnitIncrement(20);
         sp.getVerticalScrollBar().setUnitIncrement(20);
         sp.setPreferredSize(new Dimension(200, 200));
+        JProgressBar pb = new JProgressBar(0, 100);
+        pb.setValue(50);
+        pb.setPreferredSize(new Dimension(200, 10));
+        JProgressBar pbi = new JProgressBar(0, 100);
+        pbi.setIndeterminate(true);
+        pbi.setPreferredSize(new Dimension(200, 10));
+        pbi.setForeground(Color.RED);
+        // pbi.setBorderPainted(false);
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         frame.getContentPane().add(label);
         frame.getContentPane().add(cb);
@@ -69,10 +79,11 @@ public class Main {
         frame.getContentPane().add(pf);
         frame.getContentPane().add(button);
         frame.getContentPane().add(sp);
+        frame.getContentPane().add(pb);
+        frame.getContentPane().add(pbi);
         cb.setPreferredSize(new Dimension(200, 25));
         tf.setPreferredSize(new Dimension(200, 25));
         pf.setPreferredSize(new Dimension(200, 25));
-        
         
         frame.pack();
         frame.setSize(new Dimension(300, 400));
