@@ -8,18 +8,23 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.PrintStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -40,6 +45,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
     @SuppressWarnings("NonConstantLogger")
     static Logger mlaf = null;
+    
+    private static List<Image> loadIcons() {
+        int[] iconSizes = {16, 20, 24, 32, 48, 64, 128, 256};
+        List<Image> icons = new ArrayList<>();
+        for (int i = 0; i < iconSizes.length; i++) {
+            ImageIcon icon = new ImageIcon(Main.class.getResource("icons/MetroDefaultIcon" + String.valueOf(iconSizes[i]) + ".png"));
+            icons.add(icon.getImage());
+        }
+        return icons;
+    }
     
     private static void createAndShowGUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -89,7 +104,8 @@ public class Main {
         cb.setPreferredSize(new Dimension(200, 25));
         tf.setPreferredSize(new Dimension(200, 25));
         pf.setPreferredSize(new Dimension(200, 25));
-        
+
+        // frame.setIconImages(loadIcons());
         frame.pack();
         frame.setSize(new Dimension(300, 400));
         frame.setLocation(400, 200);

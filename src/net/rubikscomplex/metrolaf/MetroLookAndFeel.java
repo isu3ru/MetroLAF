@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
@@ -129,6 +130,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "MenuItem.selectionForeground", theme.getButtonHighlightForeground(),
             "MenuItem.border", BorderFactory.createEmptyBorder(3, 3, 3, 3),
             "control", theme.getSecondary(),
+            "defaultFrameIcon", new ImageIcon(MetroLookAndFeel.class.getResource("icons/MetroDefaultIcon16.png")),
         };
         table.putDefaults(uiDefaults);
     }
@@ -145,7 +147,7 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
                 Color c = (Color)v;
                 // if (c.getRed() == 163 && c.getGreen() == 184) {
                 if (c.getRed() == 240) {
-                    System.err.println("*** "+k.toString());
+                    // System.err.println("*** "+k.toString());
                     // UIManager.getDefaults().put(k, Color.WHITE);
                 }
             }

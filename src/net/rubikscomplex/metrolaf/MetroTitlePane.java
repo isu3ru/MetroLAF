@@ -139,7 +139,6 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         menuBar.setAlignmentY(Component.TOP_ALIGNMENT);
         menuBar.setFocusable(false);
         
-        // setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new MetroTitlePaneLayout());
         add(menuBar);
         add(Box.createHorizontalGlue());
@@ -160,6 +159,7 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         Dimension pd = super.getPreferredSize();
         return new Dimension(pd.width, PANE_HEIGHT);
     }
+    
     @Override
     public Dimension getMinimumSize() {
         return getPreferredSize();
@@ -188,11 +188,6 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         String title = getTitle();
         titleLabel.setText(title == null ? "" : title);
         
-        /*
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, width, height);
-        */
-        
         MetroLookAndFeel.getLogger().info(minButton.getSize().toString());
         MetroLookAndFeel.getLogger().info(String.format("Width: %d, Height: %d", width, height));
     }
@@ -214,7 +209,6 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
     }
     
     private void addMenuItems(JMenu menu) {
-        // Locale locale = rootPane.getLocale();
         int bw = MetroMenuBarUI.MENU_ITEM_MARGIN;
         Border margin = BorderFactory.createEmptyBorder(bw, bw, bw, bw);
         JMenuItem mi = menu.add(restoreAction);
@@ -490,10 +484,11 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
 
             if (systemIcon != null) {
                 g.drawImage(systemIcon, ICON_BORDER_WIDTH, ICON_BORDER_WIDTH, ICON_WIDTH, ICON_HEIGHT, null);
-            } else {
+            }
+            else {
                 Dimension d = getPreferredSize();
                 MetroLookAndFeel.getLogger().info(String.format("Painting internal frame icon. %d, %d", d.width, d.height));
-                Icon icon = UIManager.getIcon("InternalFrame.icon");
+                Icon icon = UIManager.getIcon("defaultFrameIcon");
 
                 if (icon != null) {
                     icon.paintIcon(this, g, ICON_BORDER_WIDTH, ICON_BORDER_WIDTH);
