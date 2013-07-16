@@ -16,7 +16,7 @@ public class MetroPasswordField extends JPasswordField implements MetroPromptTex
     
     public MetroPasswordField() {
         super();
-        System.err.println("*** UI: " + getUI().toString());
+        // System.err.println("*** UI: " + getUI().toString());
     }
     
     public MetroPasswordField(Document doc, String txt, int column) {

@@ -58,7 +58,7 @@ public class MetroPopupMenuUI extends BasicPopupMenuUI {
     public class MetroPopupMenuContainerListener extends ContainerAdapter {
         @Override
         public void componentAdded(ContainerEvent e) {
-            System.err.println(String.format("*** %s", e.getChild().toString()));
+            // System.err.println(String.format("*** %s", e.getChild().toString()));
             if (e.getChild() instanceof Container && !(e.getChild() instanceof JMenuItem)) {
                 ((Container)e.getChild()).addContainerListener(new MetroPopupMenuContainerListener());
             }
