@@ -4,7 +4,6 @@
  */
 package net.rubikscomplex.metrolaf;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -55,13 +54,13 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
              Cursor.SE_RESIZE_CURSOR, Cursor.SE_RESIZE_CURSOR
     };
     
-    protected JComponent titlePane;
-    protected JRootPane root;
-    protected Window window;
-    protected MouseInputListener mouseInputListener;
+    protected JComponent titlePane = null;
+    protected JRootPane root = null;
+    protected Window window = null;
+    protected MouseInputListener mouseInputListener = null;
     protected Cursor lastCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
-    protected LayoutManager savedOldLayout;
-    protected LayoutManager layoutManager;
+    protected LayoutManager savedOldLayout = null;
+    protected LayoutManager layoutManager = null;
     
     public static ComponentUI createUI(JComponent c) {
         MetroLookAndFeel.getLogger().info("Creating new MetroRootPaneUI...");
@@ -73,8 +72,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         MetroLookAndFeel.getLogger().info("installUI called...");
         super.installUI(c);
         root = (JRootPane)c;
-        int style = root.getWindowDecorationStyle();
-        if (style != JRootPane.NONE) {
+        if (!isLookAndFeelDecorated(root)) {
             installClientDecorations(root);
         }
     }
@@ -98,9 +96,8 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         switch (propertyName) {
             case "windowDecorationStyle":
                 JRootPane rootPane = (JRootPane)e.getSource();
-                int style = rootPane.getWindowDecorationStyle();
                 uninstallClientDecorations(rootPane);
-                if (style != JRootPane.NONE) {
+                if (!isLookAndFeelDecorated(root)) {
                     installClientDecorations(rootPane);
                 }
                 break;
@@ -111,6 +108,10 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
                 }
                 break;
         }
+    }
+    
+    protected boolean isLookAndFeelDecorated(JRootPane root) {
+        return (root.getWindowDecorationStyle() == JRootPane.NONE);
     }
     
     protected JComponent createTitlePane(JRootPane root) {
@@ -194,8 +195,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         uninstallWindowListeners(root);
         setTitlePane(root, null);
         uninstallLayout(root);
-        int ds = root.getWindowDecorationStyle();
-        if (ds == JRootPane.NONE) {
+        if (!isLookAndFeelDecorated(root)) {
             root.revalidate();
             root.repaint();
         }
@@ -258,7 +258,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         }
         
         protected Dimension getTPDimensions(JRootPane root, JComponent titlePane, Size s) {
-            if (root.getWindowDecorationStyle() != JRootPane.NONE && titlePane != null) {
+            if (!isLookAndFeelDecorated(root) && titlePane != null) {
                 switch(s) {
                     case PREFERRED:
                         return titlePane.getPreferredSize();
@@ -324,7 +324,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
             if (root.getGlassPane() != null) {
                 root.getGlassPane().setBounds(i.left, i.top, width, height);
             }
-            if (root.getWindowDecorationStyle() != JRootPane.NONE) {
+            if (!isLookAndFeelDecorated(root)) {
                 JComponent titlePane = ((MetroRootPaneUI)root.getUI()).getTitlePane();
                 if (titlePane != null) {
                     titlePane.setBounds(0, nextY, width, MetroTitlePane.PANE_HEIGHT);
@@ -397,7 +397,7 @@ public class MetroRootPaneUI extends BasicRootPaneUI {
         public void mousePressed(MouseEvent ev) {
             JRootPane rootPane = getRootPane();
 
-            if (rootPane.getWindowDecorationStyle() == JRootPane.NONE) {
+            if (isLookAndFeelDecorated(rootPane)) {
                 return;
             }
             Point dragWindowOffset = ev.getPoint();

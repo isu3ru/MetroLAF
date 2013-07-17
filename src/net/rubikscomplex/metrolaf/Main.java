@@ -12,7 +12,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.PrintStream;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,13 +104,13 @@ public class Main {
         tf.setPreferredSize(new Dimension(200, 25));
         pf.setPreferredSize(new Dimension(200, 25));
 
-        // frame.setIconImages(loadIcons());
         frame.pack();
         frame.setSize(new Dimension(300, 400));
         frame.setLocation(400, 200);
         for (Component c : frame.getRootPane().getLayeredPane().getComponents()) {
             mlaf.log(Level.INFO, "{0}: {1}", new Object[]{c.getClass().getSimpleName(), c.getSize()});
         }
+        // System.err.println("*** Undecorated: " + frame.isUndecorated());
         frame.setVisible(true);
     }
     
