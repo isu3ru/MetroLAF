@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -34,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -55,6 +57,20 @@ public class Main {
         return icons;
     }
     
+    public static void listColors() {
+        UIDefaults d = UIManager.getDefaults();
+        System.err.println("Listing colors: ");
+        Enumeration ks = d.keys();
+        while (ks.hasMoreElements()) {
+            Object k = ks.nextElement();
+            Object v = d.get(k);
+            if (k.toString().contains("Separator")) {
+            // if (v instanceof Color || v instanceof ColorUIResource || k.toString().contains("oreground") || k.toString().contains("ackground")) {
+                System.err.println("  " + k + ": " + v);
+            }
+        }
+    }
+
     private static void createAndShowGUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
@@ -181,7 +197,7 @@ public class Main {
             mlaf.log(Level.INFO, "Error setting look and feel: {0}", e.getMessage());
             System.exit(1);
         }
-        
+        listColors();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

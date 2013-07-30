@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import net.rubikscomplex.metrolaf.MetroBorders.ButtonBorder;
@@ -78,6 +79,8 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "PasswordFieldUI", "net.rubikscomplex.metrolaf.MetroPasswordFieldUI",
             "ScrollBarUI", "net.rubikscomplex.metrolaf.MetroScrollBarUI",
             "ProgressBarUI", "net.rubikscomplex.metrolaf.MetroProgressBarUI",
+            "MenuItemUI", "net.rubikscomplex.metrolaf.MetroMenuItemUI",
+            "SeparatorUI", "net.rubikscomplex.metrolaf.MetroSeparatorUI",
         };
         
         table.putDefaults(uiDefaults);
@@ -126,9 +129,11 @@ public class MetroLookAndFeel extends MetalLookAndFeel {
             "ComboBox.selectionBackground", theme.getButtonHighlightBackground(),
             "ComboBox.selectionForeground", theme.getButtonHighlightForeground(),
             "Button.focus", theme.getPrimary2(),
+            "MenuItem.foreground", new ColorUIResource(94, 94, 94),
             "MenuItem.selectionBackground", theme.getButtonHighlightBackground(),
-            "MenuItem.selectionForeground", theme.getButtonHighlightForeground(),
-            "MenuItem.border", BorderFactory.createEmptyBorder(3, 3, 3, 3),
+            // "MenuItem.selectionForeground", theme.getButtonHighlightForeground(),
+            "MenuItem.border", BorderFactory.createEmptyBorder(0, 0, 0, 0),
+            "Separator.foreground", new ColorUIResource(238, 238, 238),
             "control", theme.getSecondary(),
             "defaultFrameIcon", new ImageIcon(MetroLookAndFeel.class.getResource("icons/MetroDefaultIcon16.png")),
         };

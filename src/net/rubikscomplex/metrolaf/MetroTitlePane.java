@@ -6,6 +6,7 @@ package net.rubikscomplex.metrolaf;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -29,6 +30,7 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -210,10 +212,13 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
     
     private void addMenuItems(JMenu menu) {
         int bw = MetroMenuBarUI.MENU_ITEM_MARGIN;
+        int tg = 10;
         Border margin = BorderFactory.createEmptyBorder(bw, bw, bw, bw);
         JMenuItem mi = menu.add(restoreAction);
         mi.setMnemonic(KeyEvent.VK_R);
         mi.setBorder(margin);
+        mi.setIcon(new ImageIcon(MetroLookAndFeel.class.getResource("icons/restore.png")));
+        mi.setIconTextGap(tg);
         Dimension d = mi.getPreferredSize();
         d.width = Math.max(MetroMenuBarUI.MIN_MENU_WIDTH, d.width);
         mi.setPreferredSize(d);
@@ -222,11 +227,15 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         mi = menu.add(minimizeAction);
         mi.setMnemonic(KeyEvent.VK_M);
         mi.setBorder(margin);
+        mi.setIcon(new ImageIcon(MetroLookAndFeel.class.getResource("icons/minimize.png")));
+        mi.setIconTextGap(tg);
         
         if (Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH)) {
             mi = menu.add(maximizeAction);
             mi.setMnemonic(KeyEvent.VK_X);
             mi.setBorder(margin);
+            mi.setIcon(new ImageIcon(MetroLookAndFeel.class.getResource("icons/maximize.png")));
+            mi.setIconTextGap(tg);
         }
         
         menu.add(new JSeparator());
@@ -234,6 +243,8 @@ public class MetroTitlePane extends JComponent implements PropertyChangeListener
         mi = menu.add(closeAction);
         mi.setMnemonic(KeyEvent.VK_C);
         mi.setBorder(margin);
+        mi.setIcon(new ImageIcon(MetroLookAndFeel.class.getResource("icons/close.png")));
+        mi.setIconTextGap(tg);
     }
     
     public void prepareButtons() {

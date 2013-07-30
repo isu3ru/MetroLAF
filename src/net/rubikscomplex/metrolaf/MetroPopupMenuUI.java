@@ -4,13 +4,17 @@
  */
 package net.rubikscomplex.metrolaf;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.Popup;
+import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPopupMenuUI;
 
@@ -20,6 +24,7 @@ import javax.swing.plaf.basic.BasicPopupMenuUI;
  */
 public class MetroPopupMenuUI extends BasicPopupMenuUI {
     protected JPopupMenu popupMenu = null;
+    protected Border pmBorder = null;
     protected ContainerListener containerListener = null;
     
     public static ComponentUI createUI(JComponent c) {
@@ -34,9 +39,22 @@ public class MetroPopupMenuUI extends BasicPopupMenuUI {
     }
     
     @Override
+    public Popup getPopup(JPopupMenu pm, int x, int y) {
+        if (pmBorder == null) {
+            // pmBorder = pm.getBorder();
+            pmBorder = pm.getBorder();
+            MetroLookAndFeel.getLogger().info(pmBorder.toString());
+            pm.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(1, 1, 1, 1)));
+        }
+        MetroLookAndFeel.getLogger().info(pm.getLayout().toString());
+        return super.getPopup(pm, x, y);
+    }
+    
+    @Override
     public void uninstallUI(JComponent c) {
         super.uninstallUI(c);
         popupMenu = null;
+        pmBorder = null;
     }
     
     @Override
